@@ -8,7 +8,7 @@ import NotesContext from '../note-content';
 
 
 class Note extends Component {
-  deleteRequest = (noteId, callback) => {
+  deleteRequest = (Id, callback) => {
     fetch(`http://localhost:9090/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
@@ -30,7 +30,6 @@ class Note extends Component {
 
 
   render(){
-    console.log(this.props.match.path)
   return (
     <NotesContext.Consumer>
        {(context) => (
