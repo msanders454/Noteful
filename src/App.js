@@ -114,7 +114,7 @@ class App extends Component {
 
     
     return (
-      <NotesContext.Provider value={contextValue}>
+      <NotesContext.Provider value = {contextValue}>
         <div className='App'>
           <nav className='AppNav'>
             {this.renderNavRoutes()}
