@@ -3,36 +3,30 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Node.css'
-import NotesContext from '../note-content';
+import NotesContent from '../note-content';
+import PropTypes from 'prop-types'
 
 
+export default class Note extends React.Component {
+  static contextType = NotesContent;
 
-class Note extends Component {
-  deleteRequest = (Id, callback) => {
-    fetch(`http://localhost:9090/notes/${noteId}`, {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json'
-      }})
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => {
-            throw error
-          })
-        }
-        return res.json()
-      })
-      .then(res => callback(noteId))
-      .catch(error => {
-        console.log((error.message))
-      })
-  }  
+  handleClickDelete = () => {
+    if (this.props.match.params.noteId) {
+      this.context.hnadleDeleteNote(this.props.id)
+        .then(res => res.json())
+        .then(() => this.props.history.push('/'))
+        .then(() => this.context.updateNote(this.props.id))
+    }
+    else {
+      this.context.handleDeleteNote(this.props.id)
+      .then(res => res.json())
+      .then(() => this.context.updateNote(this.props.id))
+    }
+  }
 
 
   render(){
   return (
-    <NotesContext.Consumer>
-       {(context) => (
         <div className='Note'>
           <h2 className='NoteTitle'>
             <Link to={`/note/${this.props.id}`}>
@@ -40,31 +34,17 @@ class Note extends Component {
             </Link>
           </h2>
           <button className='NoteDelete' type='button'
-          onClick={() => {
-            this.deleteRequest(this.props.id,context.deleteNote);
-            if(this.props.match.path === "/note/:noteId"){
-              this.props.history.push('/')
-            }
-          }}
+          onClick={this.handleClickDelete}
           >
             <FontAwesomeIcon icon='trash-alt' />
             {' '}
-            remove
+            Delete
           </button>
-          <div className='NoteDates'>
-            <div className='NoteModified'>
-              Modified
-              {' '}
-              <span className='Date'>
-                {format(this.props.modified, 'Do MMM YYYY')}
-              </span>
-            </div>
-          </div>
         </div>
        )}
-    </NotesContext.Consumer>
-  )
 }
+Note.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  modified: PropTypes.string.isRequired
 }
-
-export default Note
