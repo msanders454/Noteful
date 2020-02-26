@@ -9,13 +9,6 @@
   min-height: 100vh;
 }
 
-.AppNav {
-  background-color: #1f395e;
-  color: #fff;
-  grid-area: sidebar;
-  overflow: auto;
-}
-
 .AppHeader {
   background-color: #24436b;
   color: #ffffff;
@@ -27,6 +20,13 @@
 
 .AppHeader a {
   color: #bdbdbd;
+}
+
+.AppNav {
+  background-color: #1f395e;
+  color: #fff;
+  grid-area: sidebar;
+  overflow: auto;
 }
 
 .AppMain {
