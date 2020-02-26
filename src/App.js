@@ -24,11 +24,12 @@ async componentDidMount() {
   try {
     const folders = await folderMount.json();
     const notes = await notesMount.json();
-    //this.setState({
-     //notes,
-     //folders,
-     //error: null,
-  // })
+    console.log(this.state);
+    this.setState({
+     notes,
+     folders,
+     error: null,
+   })
   } catch(err) {
     this.setState({error: err.message})
   }
