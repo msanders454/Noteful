@@ -10,19 +10,17 @@
 }
 
 .AppNav {
-  background-color: #0b1b32;
+  background-color: #1f395e;
   color: #fff;
   grid-area: sidebar;
-  height: 100vh;
   overflow: auto;
 }
 
 .AppHeader {
-  background-color: #0b1f3a;
-  color: #bdbdbd;
-  font-family: var(--custom-font);
+  background-color: #24436b;
+  color: #ffffff;
   grid-area: header;
-  padding-left: 16px;
+  padding-left: 50%;
   padding-top: 32px;
   text-shadow: 2px 1px 2px black;
 }
@@ -34,6 +32,5 @@
 .AppMain {
   background-color: #102541;
   grid-area: main;
-  height: calc(100vh - 120px);
   overflow: auto;
 }
