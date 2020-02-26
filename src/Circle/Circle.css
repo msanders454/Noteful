@@ -1,23 +1,20 @@
 .Circle {
-  height: 60px;
-  width: 60px;
-  padding: 8px;
-    background-color: #e5e2e2;
-    border-radius: 30px;
-    border: 0;
-    text-align: center;
-    text-decoration: none;
-    color: black;
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
+  height: 90px;
+  width: 90px;
+  background-color: #e5e2e2;
+  border-radius: 50%;
+  border: 0;
+  color: black;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
   }
   
-  a.Circle {
-    padding: 8px 8px 8px;
+a.Circle {
+  padding: 8px 8px 8px;
   }
   
-  .Circle:hover {
-    cursor: pointer;
-  }
+.Circle:hover {
+  cursor: pointer;
+ }

@@ -1,8 +1,9 @@
 import React from 'react'
 import './Circle.css'
+import PropTypes from 'prop-types'
 
 export default function Circle(props) {
-  const { tag, className, childrenm, ...otherProps } = props
+  const { tag, className, children, ...otherProps } = props
 
   return React.createElement(
     props.tag,
@@ -14,6 +15,16 @@ export default function Circle(props) {
   )
 }
 
+
+Circle.propTypes = {
+  to: PropTypes.string,
+  type: PropTypes.string,
+  className: PropTypes.string
+}
+
 Circle.defaultProps ={
   tag: 'a',
 }
+
+
+
