@@ -4,23 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Note from '../Note/Node'
 import Circle from '../Circle/Circle'
 import './ListMain.css'
-import NotesContext from '../note-content';
+import NotesContent from '../note-content';
+import { getNotesForFolder } from '../notes-help'
 
-class ListMain extends Component {
 
-  static contextType = NotesContext
+
+export default class ListMain extends React.Component {
+  static contextType = NotesContent;
+
   render(){
-    const {notes} = this.context;
-    const folderId = this.props.match.params.folderId
 
-    const notesInFolder = notes.filter((note) => 
-    {if(folderId){
-     return  note.folderId === folderId
-    } else{
-      return note
-    }}
-  );
+    const {folderId} = this.props.match.params
 
+    const notesInFolder = getNotesForFolder(this.context.notes, folderId)
 
     return (
       <section className='ListMain'>
@@ -31,7 +27,6 @@ class ListMain extends Component {
                 id={note.id}
                 name={note.name}
                 modified={note.modified}
-                history={this.props.history}
                 match={this.props.match}
               />
             </li>
@@ -41,6 +36,7 @@ class ListMain extends Component {
           <Circle
             tag={Link}
             type='button'
+            to='/add-note'
             className='ListMainNote'
           >
             <FontAwesomeIcon icon='plus' />
@@ -53,4 +49,7 @@ class ListMain extends Component {
   }
 }
 
-export default ListMain;
+
+ListMain.defaultProps = {
+  notes: [],
+}
