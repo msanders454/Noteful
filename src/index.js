@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom'
-import React, { Component }  from 'react';
+import React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faPlus, faChevronLeft, faTrashAlt, faCheckDouble
