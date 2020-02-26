@@ -18,10 +18,12 @@ export default function ListNav () {
                 className='ListNavFolder'
                  to={`/folders/${folder.id}`}
                 >
-             <span className='NoteListNavNotes'>
-               {countNotesForFolder(notes, folder.id)}
+             <span className='ListNavCounter'>
+               {countNotesForFolder(notes, folder.id)}.)
              </span>
-             {folder.name}
+             <span className='ListNavName'>
+               {folder.name}
+             </span>
            </NavLink>
          </li>
        )}
