@@ -58,6 +58,10 @@ export default class AddNote extends Component {
     updateFolderId = (folderId) => {
       this.setState ({folderId}, () => this.validateFolderId(folderId));
     }
+
+    updateContent = (content) => {
+      this.setState ({content}, () => console.log('content updated'));
+    }
     validateFolderId(folderId) {
       let message = this.state.validationMessage.folder;
       let hasError = false;
