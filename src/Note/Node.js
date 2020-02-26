@@ -12,7 +12,7 @@ export default class Note extends React.Component {
 
   handleClickDelete = () => {
     if (this.props.match.params.noteId) {
-      this.context.hnadleDeleteNote(this.props.id)
+      this.context.handleDeleteNote(this.props.id)
         .then(res => res.json())
         .then(() => this.props.history.push('/'))
         .then(() => this.context.updateNote(this.props.id))
