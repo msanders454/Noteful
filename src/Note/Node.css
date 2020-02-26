@@ -1,24 +1,22 @@
 .Note {
-    --note-height: 88px;
-    background-color: #010d1e;
-    color: #cacaca;
-    height: var(--note-height);
-    margin-bottom: 8px;
-    max-width: 380px;
-    padding: 8px 0 8px 8px;
+    background-color: #0a1c35;
     position: relative;
+    color: #cacaca;
+    margin-bottom: 10px;
+    max-width: 380px;
+    padding: 30px 0 35px 8px;
   }
   
   .NoteDelete {
-    --note-button-height: 32px;
+    --note-button-height: 40px;
     background-color: #041a3a;
     border: 0;
     color: #bdbcbc;
     float: right;
-    font-size: 12px;
+    font-size: 15px;
     height: var(--note-button-height);
     position: relative;
-    top: calc((var(--note-button-height) + 32px) * -1);
+    top: calc((var(--note-button-height) + 50px) * -1);
     transform-origin: right bottom;
     transform: rotate(-90deg);
   }
@@ -37,15 +35,11 @@
   .NoteTitle a {
     color: #cacaca;
     display: block;
+    text-align: center;
+    font-size: 30px;
     text-decoration: none;
   }
   .NoteTitle a:hover {
     color: #FFB72F;
   }
   
-  .NoteDates {
-    bottom: 8px;
-    color: #a7a5a5;
-    font-size: 14px;
-    position: absolute;
-  }
