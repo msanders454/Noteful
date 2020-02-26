@@ -7,39 +7,66 @@ import ListNav from './ListNav/ListNav'
 import PageNav from './PageNav/PageNav'
 import ListMain from './ListMain/ListMain'
 import PageMain from './PageMain/PageMain'
-import NotesContext from './note-content';
-import { findNote } from './notes-help'
+import NotesContent from './note-content'
 import './App.css'
+import ErrorBound from './ErrorBound/ErrorBound'
 
 class App extends Component {
   state = {
     notes: [],
     folders: [],
-  };
+    error: null,
+};
 
-  fetchFolders() {
-    fetch('http://localhost:9090/folders')
-    .then(res => res.json())
-    .then(resjson => this.setState({folders: resjson}))
+async componentDidMount() {
+  const [folderMount, notesMount] = [await fetch('http://localhost:9090/folders'), await fetch('http://localhost:9090/notes')]
+
+  try {
+    const folders = await folderMount.json();
+    const notes = await notesMount.json();
+    //this.setState({
+     //notes,
+     //folders,
+     //error: null,
+  // })
+  } catch(err) {
+    this.setState({error: err.message})
   }
+}
 
-  fetchNotes() {
-    fetch('http://localhost:9090/notes')
-    .then(res =>res.json())
-    .then(resjson => this.setState({notes: resjson}))
-  }
+handleDeleteNote = (noteId) => {
+  return fetch(`http://localhost:9090/notes/${noteId}`, {method: "DELETE"})
+}
 
-  deleteNotes = noteId => {
-    const newNotes = this.state.notes.filter((note) => note.id !== noteId);
-    this.setState({notes: newNotes})
-  }
+updateNote = (noteId) => {
+  this.setState({
+    notes: this.state.notes.filter(note => note.id !== noteId)
+  })
+}
 
- 
+randomId = () => {
+  return Math.random().toString(36).substr(2,9);
+ // let randomId = (random + "-ffaf-11e8-8eb2-f2801f1b9fd1")
+  //return randomId;
+}
 
-  componentDidMount() {
-    this.fetchFolders()
-    this.fetchNotes()
-  }
+handleAddFolder = (newFolder) => {
+  this.setState({
+    folders: [...this.state.folders, newFolder],
+  })
+}
+
+handleAddNote = note => {
+  this.setState({
+    notes: [...this.state.notes, note],
+  })
+}
+
+handleError = (error) => {
+  this.setState({error})
+  console.log('error')
+}
+
 
   renderNavRoutes() {
     return (
@@ -69,56 +96,40 @@ class App extends Component {
   }
 
   renderMainRoutes() {
-    const { notes } = this.state
     return (
       <>
-        {['/', '/folder/:folderId'].map(path =>
-          <Route
-            exact
-            key={path}
-            path={path}
-            component={ListMain}
-          />
+      {['/', '/folder/:folderId'].map(path =>
+          <Route exact key={path} path={path} component={ListMain}/>
         )}
-        <Route
-          path='/note/:noteId'
-          render={routeProps => {
-            const { noteId } = routeProps.match.params
-            const note = findNote(notes, noteId)
-            return (
-              <PageMain
-                {...routeProps}
-                note={note}
-              />
-            )
-          }}
-        />
-        <Route
-          path='/add-folder'
-          component={AddFolder}
-        />
-        <Route
-          path='/add-note'
-          component={AddNote}
-        />
+        <Route path="/note/:noteId" component={PageMain} />
+        <Route path="/add-folder" component={AddFolder} />
+        <Route path="/add-note" component={AddNote} />
       </>
     )
   }
 
   render() {
     const contextValue = {
-      folders: this.state.folders,
       notes: this.state.notes,
-      deleteNote: this.deleteNote
+      folders: this.state.folders,
+      handleDeleteNote: this.handleDeleteNote,
+      handleAddFolder: this.handleAddFolder,
+      updateNote: this.updateNote,
+      handleAddNote: this.handleAddNote,
+      randomId: this.randomId,
+      handleError: this.handleError
     }
 
-    
+ 
+   
     return (
-      <NotesContext.Provider value = {contextValue}>
+      <NotesContent.Provider value = {contextValue}>
         <div className='App'>
+        <ErrorBound>
           <nav className='AppNav'>
             {this.renderNavRoutes()}
           </nav>
+          </ErrorBound>
           <header className='AppHeader'>
             <h1>
               <Link to='/'>Noteful</Link>
@@ -126,11 +137,13 @@ class App extends Component {
               <FontAwesomeIcon icon='check-double' />
             </h1>
           </header>
+          <ErrorBound>
           <main className='AppMain'>
             {this.renderMainRoutes()}
           </main>
+          </ErrorBound>
         </div>
-      </NotesContext.Provider>
+      </NotesContent.Provider>
     )
   }
 }
