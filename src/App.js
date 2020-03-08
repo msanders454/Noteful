@@ -11,45 +11,45 @@ import NotesContent from './note-content'
 import './App.css'
 import ErrorBound from './ErrorBound/ErrorBound'
 
-class App extends Component {
-  state = {
-    notes: [],
-    folders: [],
-    error: null,
-};
-
-async componentDidMount() {
-  const [folderMount, notesMount] = [await fetch('http://localhost:9090/folders'), await fetch('http://localhost:9090/notes')]
-
-  try {
-    const folders = await folderMount.json();
-    const notes = await notesMount.json();
-    console.log(this.state);
-    this.setState({
-     notes,
-     folders,
-     error: null,
-   })
-  } catch(err) {
-    this.setState({error: err.message})
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      notes: [],
+      folders: [],
+      errorBoundaryKey: 0
+    };
   }
+
+componentDidMount() {
+  Promise.all([fetch(`http://localhost:9090/notes`), fetch(`http://localhost:9090/folders`)])
+    .then(([notesRes, foldersRes]) => {
+      if (!notesRes.ok) return notesRes.json().then(e => Promise.reject(e));
+      if (!foldersRes.ok)
+        return foldersRes.json().then(e => Promise.reject(e));
+      return Promise.all([notesRes.json(), foldersRes.json()]);
+    })
+    .then(([notes, folders]) => {
+      folders.map(folder => {
+        return this.handleAddFolder(folder);
+      });
+      notes.map(note => {
+        return this.handleAddNote(note);
+      });
+    })
+    .catch(error => {
+      console.error({ error });
+    });
 }
+
 
 handleDeleteNote = (noteId) => {
-  return fetch(`http://localhost:9090/notes/${noteId}`, {method: "DELETE"})
-}
-
-updateNote = (noteId) => {
   this.setState({
     notes: this.state.notes.filter(note => note.id !== noteId)
   })
 }
 
-randomId = () => {
-  return Math.random().toString(36).substr(2,9);
- // let randomId = (random + "-ffaf-11e8-8eb2-f2801f1b9fd1")
-  //return randomId;
-}
+
 
 handleAddFolder = (newFolder) => {
   this.setState({
@@ -63,6 +63,12 @@ handleAddNote = note => {
   })
 }
 
+handleDeleteFolder = folderId => {
+  this.setState({
+    folders: this.state.folders.filter(folder => folder.id !== folderId)
+  });
+};
+
 handleError = (error) => {
   this.setState({error})
   console.log('error')
@@ -70,6 +76,7 @@ handleError = (error) => {
 
 
   renderNavRoutes() {
+    console.log(this.state);
     return (
       <>
         {['/', '/folder/:folderId'].map(path =>
@@ -93,7 +100,7 @@ handleError = (error) => {
           component={PageNav}
         />
       </>
-    )
+    );
   }
 
   renderMainRoutes() {
@@ -110,6 +117,8 @@ handleError = (error) => {
   }
 
   render() {
+    let randomId = Math.random().toString(36).substring(2,9);
+    console.log(randomId);
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
@@ -117,8 +126,9 @@ handleError = (error) => {
       handleAddFolder: this.handleAddFolder,
       updateNote: this.updateNote,
       handleAddNote: this.handleAddNote,
-      randomId: this.randomId,
-      handleError: this.handleError
+      randomId: randomId,
+      handleError: this.handleError,
+      handleDeleteFolder: this.handleDeleteFolder
     }
 
  

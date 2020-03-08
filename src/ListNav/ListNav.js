@@ -16,7 +16,7 @@ export default function ListNav () {
             <li key={folder.id}>
                <NavLink
                 className='ListNavFolder'
-                 to={`/folders/${folder.id}`}
+                 to={`/folder/${folder.id}`}
                 >
              <span className='ListNavCounter'>
                {countNotesForFolder(notes, folder.id)}.)

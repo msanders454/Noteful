@@ -4,7 +4,7 @@ import ValidationError from '../ValidationError/ValidationError'
 import NotesContent from '../note-content';
 import NoteForm from '../Form/noteform'
 
-export default class AddNote extends Component {
+export default class AddNote extends React.Component {
   static contextType = NotesContent;
 
   constructor(props) {
@@ -22,6 +22,8 @@ export default class AddNote extends Component {
       }
     }
   }
+
+  
 
   updateNoteName = (noteName) => {
     this.setState ({noteName}, () => this.validateName(noteName));
@@ -91,6 +93,7 @@ export default class AddNote extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault()
+    console.log(this.context)
     const newNote = {
       id: this.context.randomId,
       name: this.state.noteName,
@@ -98,7 +101,7 @@ export default class AddNote extends Component {
       folderId: this.state.folderId,
       content: this.state.content
     }  
-    console.log(newNote);
+    console.log(newNote.id);
     this.addNewNote(newNote)
     this.context.handleAddNote(newNote);
   }

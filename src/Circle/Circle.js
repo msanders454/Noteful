@@ -16,12 +16,6 @@ export default function Circle(props) {
 }
 
 
-Circle.propTypes = {
-  to: PropTypes.string,
-  type: PropTypes.string,
-  className: PropTypes.string
-}
-
 Circle.defaultProps ={
   tag: 'a',
 }

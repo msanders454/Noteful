@@ -6,18 +6,24 @@ import Circle from '../Circle/Circle'
 import './ListMain.css'
 import NotesContent from '../note-content';
 import { getNotesForFolder } from '../notes-help'
-
+import PropTypes from 'prop-types';
 
 
 export default class ListMain extends React.Component {
+  
+  static defaultProps = {
+    match: {
+      params: {}
+    }
+  }
   static contextType = NotesContent;
 
   render(){
 
     const {folderId} = this.props.match.params
-
+    const { notes=[] } = this.context
     const notesInFolder = getNotesForFolder(this.context.notes, folderId)
-
+    console.log(notes);
     return (
       <section className='ListMain'>
         <ul>
@@ -27,7 +33,6 @@ export default class ListMain extends React.Component {
                 id={note.id}
                 name={note.name}
                 modified={note.modified}
-                match={this.props.match}
               />
             </li>
           )}
@@ -50,6 +55,6 @@ export default class ListMain extends React.Component {
 }
 
 
-ListMain.defaultProps = {
-  notes: [],
-}
+ListMain.propType = {
+  match: PropTypes.object.isRequired
+};

@@ -4,10 +4,12 @@ const NoteContent = React.createContext({
     notes: [],
     folders: [],
     handleDeleteNote: () => {},
-  updateNote: () => {},
-  //addFolder: () => {},
- // addNote: () => {},
- // deleteNote: () => {},
+    toggle: false,
+    handleDeleteNote: () => {},
+    deleteFolder: () => {},
+    addFolder: () => {},
+    addNote: () => {},
+    handleError: () => {}
 });
 
 
