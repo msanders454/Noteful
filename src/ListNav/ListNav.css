@@ -29,9 +29,6 @@
     color: #FFB72F;
     cursor: pointer;
   }
-  .ListNavFolder.active {
-    background-color: #102541;
-  }
   
   .ListNavCounter {
     display: block;
