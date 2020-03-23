@@ -1,0 +1,29 @@
+.folder-sidebar {
+    border: solid 1px black;
+    flex: 1;
+}
+
+.back-button {
+    border: solid 1px black;
+    margin: 10px;
+    padding: 5px;
+    padding-top: 0;
+    display: flex;
+    justify-content: center;
+    height: 90px;
+    width: 90px;
+    background-color: #e5e2e2;
+    border-radius: 50%;
+    border: 0;
+    color: black;
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.back-button:hover {
+    cursor: pointer;
+    background-color: rgb(226, 178, 21);
+   }
+

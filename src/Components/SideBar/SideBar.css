@@ -1,0 +1,47 @@
+.folder-sidebar {
+    border: solid 1px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #1f395e;
+    color: #fff;
+    overflow: auto;
+    height: 100%;
+}
+
+.add-folder {
+    border: solid 1px black;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    width: 150px;
+}
+
+.active {
+    background: lightblue;
+}
+
+
+.add-folder {
+    height: 90px;
+  width: 90px;
+  background-color: #e5e2e2;
+  border-radius: 50%;
+  border: 0;
+  color: black;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+a.add-folder {
+    padding: 8px 8px 8px;
+    }
+    
+  .add-folder:hover {
+    cursor: pointer;
+    background-color: rgb(38, 168, 38);
+   }

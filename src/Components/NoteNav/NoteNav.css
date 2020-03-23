@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+}
+
+p {
+    background-color: rgb(243, 235, 235);
+    padding: 15px;
+    width: 55%;
+    margin-left: 10px;
+}

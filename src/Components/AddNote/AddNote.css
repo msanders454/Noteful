@@ -1,0 +1,64 @@
+.AddNote {
+   background-color: #102541;
+   padding-top: 20px;
+   padding-bottom: 209px;
+  }
+  
+  .AddNote h2 {
+    color: rgb(180, 180, 180);
+    font-size: 30px;
+    text-align: left;
+    margin-left: 15%;
+  }
+
+  .formNote {
+    background-color: #394a61;
+    color: #dedede;
+    padding: 16px;
+    max-width: 340px;
+    margin-left: 10%;
+  }
+  
+  .formNote label {
+    display: block;
+    font-size: 20px;
+    padding-bottom: 8px;
+  }
+  
+  .formNote  input,
+  .formNote  textarea,
+  .formNote select {
+    font-size: 14px;
+    padding: 10px;
+    width: 300px;
+  }
+
+  .formNote input{
+    margin-bottom: 15px;
+}
+  
+  .formNote select {
+    height: 39px;
+    margin-bottom: 15px;
+  }
+  
+  .formNote > .buttons {
+    margin-top: 26px;
+  }
+  
+  .formNote button {
+    background-color: black;
+    border-radius: 10px;
+    border: 0;
+    color: white;
+    display: block;
+    margin-left: 35%;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+  }
+  .formNote  button[type="submit"]:hover {
+    background-color: #a84e24;
+    color: white;
+  }

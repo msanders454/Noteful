@@ -1,0 +1,16 @@
+
+
+.AppHeader {
+    background-color: #24436b;
+    color: #ffffff;
+    padding-left: 25%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-shadow: 2px 1px 8px black;
+  }
+
+  h1 {
+    margin-left: 5px;
+}
+
+

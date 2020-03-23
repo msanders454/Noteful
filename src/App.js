@@ -1,162 +1,160 @@
-import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import AddFolder from './AddFolder/AddFolder'
-import AddNote from './AddNote/AddNote'
-import ListNav from './ListNav/ListNav'
-import PageNav from './PageNav/PageNav'
-import ListMain from './ListMain/ListMain'
-import PageMain from './PageMain/PageMain'
-import NotesContent from './note-content'
-import './App.css'
-import ErrorBound from './ErrorBound/ErrorBound'
+import React from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import './App.css';
+import Header from './Components/Header/Header';
+import Home from './Components/Home/Home'
+import FolderNav from './Components/FolderNav/FolderNav';
+import NoteNav from './Components/NoteNav/NoteNav';
+import NoteContext from './NoteContext'
+import AddFolder from './Components/AddFolder/AddFolder';
+import AddNote from './Components/AddNote/AddNote';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundry';
+
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      notes: [],
-      folders: [],
-      errorBoundaryKey: 0
-    };
+  state = {
+    folders: [],
+    notes: [],
+    noteToAdd: {
+      value: "",
+      touched: false,
+      content: "",
+      folderId: "1",
+    },
+    folderToAdd: {
+      value: "",
+      touched: false
+    },
   }
 
-componentDidMount() {
-  Promise.all([fetch(`http://localhost:9090/notes`), fetch(`http://localhost:9090/folders`)])
-    .then(([notesRes, foldersRes]) => {
-      if (!notesRes.ok) return notesRes.json().then(e => Promise.reject(e));
-      if (!foldersRes.ok)
-        return foldersRes.json().then(e => Promise.reject(e));
-      return Promise.all([notesRes.json(), foldersRes.json()]);
-    })
-    .then(([notes, folders]) => {
-      folders.map(folder => {
-        return this.handleAddFolder(folder);
-      });
-      notes.map(note => {
-        return this.handleAddNote(note);
-      });
-    })
-    .catch(error => {
-      console.error({ error });
-    });
-}
+  componentWillMount(){
+    fetch(`https://desolate-inlet-63627.herokuapp.com/api/folders`)
+    .then(response => response.json())
+    .then(folders => this.setState({folders}))
 
-
-handleDeleteNote = (noteId) => {
-  this.setState({
-    notes: this.state.notes.filter(note => note.id !== noteId)
-  })
-}
-
-
-
-handleAddFolder = (newFolder) => {
-  this.setState({
-    folders: [...this.state.folders, newFolder],
-  })
-}
-
-handleAddNote = note => {
-  this.setState({
-    notes: [...this.state.notes, note],
-  })
-}
-
-handleDeleteFolder = folderId => {
-  this.setState({
-    folders: this.state.folders.filter(folder => folder.id !== folderId)
-  });
-};
-
-handleError = (error) => {
-  this.setState({error})
-  console.log('error')
-}
-
-
-  renderNavRoutes() {
-    console.log(this.state);
-    return (
-      <>
-        {['/', '/folder/:folderId'].map(path =>
-          <Route
-            exact
-            key={path}
-            path={path}
-            component={ListNav}
-          />
-        )}
-        <Route
-          path='/note/:noteId'
-          component={PageNav}
-        />
-        <Route
-          path='/add-folder'
-          component={PageNav}
-        />
-        <Route
-          path='/add-note'
-          component={PageNav}
-        />
-      </>
-    );
+    fetch(`https://desolate-inlet-63627.herokuapp.com/api/notes`)
+    .then(response => response.json())
+    .then(notes => this.setState({notes}))
   }
 
-  renderMainRoutes() {
-    return (
-      <>
-      {['/', '/folder/:folderId'].map(path =>
-          <Route exact key={path} path={path} component={ListMain}/>
-        )}
-        <Route path="/note/:noteId" component={PageMain} />
-        <Route path="/add-folder" component={AddFolder} />
-        <Route path="/add-note" component={AddNote} />
-      </>
-    )
+  deleteNote = (noteId) => {
+    fetch(`https://desolate-inlet-63627.herokuapp.com/api/notes/${noteId}`, {
+    method: 'DELETE',
+    headers: {
+    'content-type': 'application/json'
+    },
+  })
+    let newNotes = this.state.notes.filter(note => note.id !== noteId)
+
+    this.setState({notes: newNotes})
   }
 
-  render() {
-    let randomId = Math.random().toString(36).substring(2,9);
-    console.log(randomId);
-    const contextValue = {
-      notes: this.state.notes,
-      folders: this.state.folders,
-      handleDeleteNote: this.handleDeleteNote,
-      handleAddFolder: this.handleAddFolder,
-      updateNote: this.updateNote,
-      handleAddNote: this.handleAddNote,
-      randomId: randomId,
-      handleError: this.handleError,
-      handleDeleteFolder: this.handleDeleteFolder
+  updateFolder = (name) => {
+    this.setState({ folderToAdd: { value: name, touched: true } })
+  }
+
+  onAddFolder = (e) => {
+    e.preventDefault();
+    let r = Math.random().toString(36).substring(7);
+    const opts = {id: r, name: this.state.folderToAdd.value}
+    
+    try{
+    fetch('https://desolate-inlet-63627.herokuapp.com/api/folders', {
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(opts)
+    }).then(() =>
+    
+    fetch(`https://desolate-inlet-63627.herokuapp.com/api/folders`)
+    .then(response => response.json())
+    .then(folders => this.setState({folders}))
+    .then(() => console.log(this.state)))
+    }catch(error){
+      console.error(error)
     }
 
- 
-   
+    this.props.history.push('/');
+  }
+
+  updateNote = (name) => {
+    let newNote = this.state.noteToAdd;
+    newNote.value = name;
+    newNote.touched = true;
+    this.setState({ noteToAdd: newNote})
+  }
+
+  updateNoteFolder = (id) => {
+    let newNote = this.state.noteToAdd;
+    newNote.folderId = id;
+    this.setState({ noteToAdd: newNote})
+  }
+
+  updateNoteContent = (content) => {
+    let newNote = this.state.noteToAdd;
+    newNote.content = content;
+    this.setState({ noteToAdd: newNote})
+  }
+
+  validateNote(){
+    if(this.state.noteToAdd.touched && this.state.noteToAdd.value < 1){
+      return 'Name must not be left empty'
+    }
+    return <></>
+  }
+
+  validateFolder(){
+    if(this.state.folderToAdd.touched && this.state.folderToAdd.value < 1){
+      return 'Name must not be left empty'
+    }
+    return <></>
+  }
+
+  onAddNote = (e) => {
+    e.preventDefault();
+    let note = this.state.noteToAdd
+    const opts = {name: note.value, folderid: note.folderId, content: note.content}
+    
+    try{
+      fetch('http://desolate-inlet-63627.herokuapp.com/api/notes', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(opts)
+      }).then(() =>
+      
+      fetch(`https://desolate-inlet-63627.herokuapp.com/api/notes`)
+      .then(response => response.json())
+      .then(notes => this.setState({notes})))
+
+    } catch(error) {
+      console.error(error)
+    }
+    
+    this.props.history.push('/');
+  }
+
+  render(){
+    console.log(this.state.notes);
     return (
-      <NotesContent.Provider value = {contextValue}>
-        <div className='App'>
-        <ErrorBound>
-          <nav className='AppNav'>
-            {this.renderNavRoutes()}
-          </nav>
-          </ErrorBound>
-          <header className='AppHeader'>
-            <h1>
-              <Link to='/'>Noteful</Link>
-              {' '}
-              <FontAwesomeIcon icon='check-double' />
-            </h1>
-          </header>
-          <ErrorBound>
-          <main className='AppMain'>
-            {this.renderMainRoutes()}
-          </main>
-          </ErrorBound>
-        </div>
-      </NotesContent.Provider>
-    )
+      <NoteContext.Provider value={{
+        folders: this.state.folders,
+        notes: this.state.notes, 
+        deleteNote: this.deleteNote,
+        }}>
+      <div className='App'>
+        < Header />
+        <ErrorBoundary>
+        < Switch >
+          < Route path="/" exact render={() => < Home notes={this.state.notes}/>} />
+          < Route path="/folder/:id" exact render={(props) => < FolderNav id={props.match.params.id}/>} />
+          < Route path="/notes/:id" render={(props) => < NoteNav onBackClick={() => props.history.goBack()} id={props.match.params.id}/>} />
+          < Route path="/addFolder" render={() => <AddFolder onAddFolder={this.onAddFolder} updateFolder={this.updateFolder} validateFolder={this.validateFolder()}/>}/>
+          < Route path="/addNote" render={() => <AddNote onAddNote={this.onAddNote} updateNote={this.updateNote} updateNoteFolder={this.updateNoteFolder} updateNoteContent={this.updateNoteContent} validateNote={this.validateNote()}/>}/>
+        </Switch>
+        </ErrorBoundary>
+      </div>
+      </NoteContext.Provider>
+    );
   }
 }
 
-export default App
+export default withRouter(App);
