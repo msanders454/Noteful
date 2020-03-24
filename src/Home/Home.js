@@ -1,7 +1,6 @@
 import React from 'react';
 import SideBar from '../SideBar/SideBar';
 import MainPage from '../MainPage/MainPage';
-import './Home.css';
 import PropTypes from 'prop-types';
 
 function Home(props){
