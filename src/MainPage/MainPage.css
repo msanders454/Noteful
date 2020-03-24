@@ -1,4 +1,4 @@
-.notes-section {
+.MainPage {
     border: solid 1px black;
     flex: 2;
     padding: 8px;
@@ -14,7 +14,7 @@
   border-radius: 50%;
   border: 0;
   color: black;
-  margin-left: 160px;
+  margin-left: 190px;
   display: block;
   font-size: 20px;
   font-weight: bold;
@@ -26,3 +26,9 @@
     cursor: pointer;
     background-color: rgb(17, 95, 17);
    }
+
+   @media only screen and (max-width: 600px) {
+    .add-note {
+      margin-left: 70px;
+    }
+  }

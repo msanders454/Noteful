@@ -1,4 +1,4 @@
-.folder-sidebar {
+.sidebar {
     border: solid 1px black;
     display: flex;
     flex-direction: column;
@@ -8,6 +8,7 @@
     color: #fff;
     overflow: auto;
     height: 100%;
+    width:25%;
 }
 
 .add-folder {
@@ -25,7 +26,7 @@
 
 
 .add-folder {
-    height: 90px;
+  height: 90px;
   width: 90px;
   background-color: #e5e2e2;
   border-radius: 50%;
@@ -38,10 +39,16 @@
 }
 
 a.add-folder {
-    padding: 8px 8px 8px;
-    }
+  padding: 8px 8px 8px;
+  }
     
   .add-folder:hover {
     cursor: pointer;
     background-color: rgb(38, 168, 38);
    }
+
+   @media only screen and (max-width: 600px) {
+    .sidebar {
+      width: 30%;
+    }
+  }

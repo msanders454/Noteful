@@ -6,7 +6,7 @@ function AddFolder(props){
     return (
         <section className='AddFolder'>
             <h2>Create a folder</h2>
-            <form className={'formFolder'} onSubmit={(e) => props.onAddFolder(e)}>
+            <form className={'formFolder'} onSubmit={(e) => props.handleAddFolder(e)}>
                 {props.validateFolder}
                 <label htmlFor="Folder-add">Add Folder:</label>
                 <input required name="add-folder" id="add-folder" onChange={(val) => props.updateFolder(val.target.value)}></input>
@@ -19,6 +19,6 @@ function AddFolder(props){
 export default AddFolder;
 
 AddFolder.propTypes = {
-    onAddFolder: PropTypes.func,
+    handleAddFolder: PropTypes.func,
     updateFolder: PropTypes.func
 }

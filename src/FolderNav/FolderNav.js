@@ -1,8 +1,8 @@
 import React from 'react';
 import SideBar from '../SideBar/SideBar';
-import NoteSection from '../NotesSection/NotesSection';
+import MainPage from '../MainPage/MainPage';
 import './FolderNav.css'
-import NoteContext from '../../NoteContext';
+import NoteContext from '../NoteContext';
 import PropTypes from 'prop-types';
 
 
@@ -18,7 +18,7 @@ function FolderNav(props){
         <div>    
             <div className="container">
                 < SideBar/>
-                < NoteSection notes={filterNotes(props.id, value.notes)} />
+                < MainPage notes={filterNotes(props.id, value.notes)} />
             </div>
         </div>  }
         </NoteContext.Consumer>

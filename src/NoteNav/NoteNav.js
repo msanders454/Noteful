@@ -2,9 +2,9 @@ import React from 'react';
 import BackButton from '../BackButton/BackButton';
 import './NoteNav.css'
 import Note from '../Note/Note';
-import NoteContext from '../../NoteContext';
+import NoteContext from '../NoteContext';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 
 function findNote(id, notes){
@@ -21,7 +21,7 @@ console.log(props)
         <div>    
             <div className="container">
                 < BackButton folders={value.folders} currentNote={findNote(props.id, value.notes)} onBackClick={() => props.onBackClick()}/>
-                <div className="notes-section">
+                <div className="MainPage">
                     < Note key={findNote(props.id, value.notes).id} id={findNote(props.id, value.notes).id} name={findNote(props.id, value.notes).name} modified={findNote(props.id, value.notes).modified}/>  
                     <p>{findNote(props.id, value.notes).content}</p> 
                 </div> 

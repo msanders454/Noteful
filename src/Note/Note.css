@@ -1,6 +1,6 @@
 .delete{
     background-color: #041a3a;
-    width: 16%;
+    width: 13%;
     border: 0;
     color: #bdbcbc;
     font-size: 15px;
@@ -22,7 +22,7 @@
     background-color: #0a1c35;
     position: relative;
     margin-bottom: 10px;
-    max-width: 380px;
+    width: 450px;
 }
 
 h2 {
@@ -35,4 +35,10 @@ h2 {
 h2:hover{
     color: #FFB72F;
 }
+
+@media only screen and (max-width: 600px) {
+    .note {
+      width: 95%;
+    }
+  }
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import './BackButton.css';
-import NoteContext from '../../NoteContext';
+import NoteContext from '../NoteContext';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 function filterFolder(id, folders){
-    console.log(folders)
     let folder = folders.find(folder => folder.id === id)
     return folder.name;
 }

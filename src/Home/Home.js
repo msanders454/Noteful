@@ -1,6 +1,6 @@
 import React from 'react';
 import SideBar from '../SideBar/SideBar';
-import NoteSection from '../NotesSection/NotesSection';
+import MainPage from '../MainPage/MainPage';
 import './Home.css';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ function Home(props){
         <div>    
             <div className="container">
                 < SideBar/>
-                < NoteSection notes={props.notes}/>
+                < MainPage notes={props.notes}/>
             </div>
         </div>    
     )
