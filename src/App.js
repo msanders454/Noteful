@@ -42,7 +42,7 @@ class App extends React.Component {
     this.setState({ newFolder: { value: name, touched: true } })
   };
 
-  AddFolder = (event) => {
+  handleAddFolder = (event) => {
     event.preventDefault();
     const opts = { name: this.state.newFolder.value}
     
