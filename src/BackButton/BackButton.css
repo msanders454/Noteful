@@ -1,15 +1,20 @@
 .folder-sidebar {
     border: solid 1px black;
     flex: 1;
+    background-color: #1f395e;
 }
 
+.folder-sidebar h3 {
+    color: white;
+    text-align: center;
+    font-size: 34px;
+}
 .back-button {
     border: solid 1px black;
     margin: 10px;
+    margin-right: 90px;
     padding: 5px;
     padding-top: 0;
-    display: flex;
-    justify-content: center;
     height: 90px;
     width: 90px;
     background-color: #e5e2e2;
